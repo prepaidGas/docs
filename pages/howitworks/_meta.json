@@ -1,0 +1,7 @@
+{
+  "roles": "Roles",
+  "creation": "Creating Order",
+  "accepting": "Accepting Order",
+  "tx-execution": "Transaction Execution",
+  "liquidation": "Liquidation Order"
+}

@@ -1,0 +1,24 @@
+# Requesting transaction execution
+
+When the GasOrder execution timeframe comes, the user might request transaction execution by signing the data structure with the transaction details.
+
+```solidity
+Message {
+  address from;
+  uint256 nonce;
+  uint256 gasOrder; // number of the employed order
+  uint256 deadline; // deadline of the msg execution, should be within the range of order execution
+  address to; // the contract which is being called
+  uint256 gas; // gas limit to spend
+  uint256 tips; // tips to the party which pushes the tx request onchain
+  bytes data; // execution request details
+  bytes signature; // the signature by the sender
+}
+```
+
+After the transaction is signed the hash of it should be published onchain. It might be done by transaction requester itself, or by anyone else. To incentives the posting the transaction request onchain the signer specifies the tips. The tips represents the Gas within the GasOrder which will be burned and the respective share of reward will be directed to the transaction request submitter.
+
+Executor takes the signed data and calls the to contract from function within the protocol which executes the call with the data from the Message. Consecuently the call unlocks the share of the reward and the guarantee for the Executor.
+
+If the transaction is not Executed because it is not profitable for the Executor than the Executor might be liquidated, it might be implemented in few ways, centralized and decentralized, lets review the decentralized version.
+
