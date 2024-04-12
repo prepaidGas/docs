@@ -3,18 +3,18 @@
 When the GasOrder execution timeframe comes, the user might request transaction execution by signing the data structure with the transaction details.
 
 ```solidity
-Message {
+struct Message {
   address from;
   uint256 nonce;
-  uint256 gasOrder; // number of the employed order
-  uint256 deadline; // deadline of the msg execution, should be within the range of order execution
-  address to; // the contract which is being called
-  uint256 gas; // gas limit to spend
-  uint256 tips; // tips to the party which pushes the tx request onchain
-  bytes data; // execution request details
-  bytes signature; // the signature by the sender
+  uint256 order;
+  uint256 start;
+  address to;
+  uint256 gas;
+  bytes data;
 }
 ```
+
+`deadline` for the transaction execution is equal to `Message.start + Order.txWindow`
 
 After the transaction is signed the hash of it should be published onchain. It might be done by transaction requester itself, or by anyone else. To incentives the posting the transaction request onchain the signer specifies the tips. The tips represents the Gas within the GasOrder which will be burned and the respective share of reward will be directed to the transaction request submitter.
 

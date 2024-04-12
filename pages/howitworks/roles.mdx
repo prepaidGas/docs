@@ -1,13 +1,19 @@
 # Roles
 
-Current version of the system includes few permissionless and one permissioned role;
+The current version of the system includes three permissionless and one permissioned role.
 
 ## Purchaser
-Creates order in order to utilize gas later.
+
+Any externally owned account (EOA) or smart contract account may request gas by creating a Gas order. Such users are called gas purchasers.
 
 ## Executor
-Accepts order 
+
+Any externally owned account (EOA) or smart contract account may accept the conditions of any order previously created by *Purchasers*. These users are called *Executors*. To accept the order, some tokens should be locked as security.
+
+## Liquidator
+
+If a gas purchaser requests the execution of a transaction and the transaction is not executed during the `Transaction.executionWindow`, any user may execute the transaction instead of the *Executor* and receive a share of the security locked by the *Executor* as a reward. This procedure is called liquidation, and the party executing such a transaction is called a *Liquidator*.
 
 ## Validator
 
-## Anyone
+To fulfill the liquidation, the *Liquidator* must pass a set of signatures from authorized parties that validate the legitimacy of the liquidation. This role was introduced due to gas optimization issues on the Ethereum mainnet and might become deprecated later.

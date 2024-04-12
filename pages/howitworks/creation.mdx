@@ -1,18 +1,24 @@
 # Creating Order
 
-It is required to place order conditions onchain regarding the execution timeframe, gas price, and the expected security from the Executor, also the Purchaser locks the reward tokens responsible of paying the gas: gasCost * gasAmount.
+It is required to place order conditions onchain regarding the execution timeframe, gas price, and the expected security from the Executor, also the Purchaser locks the reward tokens responsible of paying the gas: `gasCost * gasAmount`.
 
-The GasOrder should include such fields:
+The gas Order should include such fields:
 
 ```solidity
-struct GasOrder {
-    uint256 gasAmount; // The amount of Gas to book for future executions
-    uint256 executionPeriodStart; // Start timestamp when it is possible to use the gas within the order
-    uint256 executionPeriodDeadline; // End timestamp when it is possible to use the gas within the order
-    uint256 executionWindow; // This variable defines a window, measured in blocks, within which a
-    // transaction must be executed. This constraint is designed to optimize timing and prevent delays, while 
-    // also safeguarding against the exploitation of gas price fluctuations by malicious actors.
-    TokenTransfer gasCost; // The cost of one Gas unit
-    TokenTransfer guarantee; // The guarantee security required from the Executor
+struct GasPayment {
+    address token;
+    uint256 perUnit;
+}
+
+struct Order {
+    address manager;
+    uint256 gas;
+    uint256 expire;
+    uint256 start;
+    uint256 end;
+    uint256 txWindow;
+    uint256 redeemWindow;
+    GasPayment gasPrice;
+    GasPayment gasGuarantee;
 }
 ```
